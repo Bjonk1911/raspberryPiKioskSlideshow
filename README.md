@@ -3,15 +3,18 @@ Use a RaspberryPi to show a full-screen Slideshow (Kiosk-mode)
 
 
 ## Installation TL;DR
-Use Raspbian and chromium, don't use midori
+We assume you have a RaspberryPi with Raspbian installed and a working internet connection.
 ```bash
-sudo apt-get update && sudo apt-get dist-upgrade
-sudo apt-get install git vim ntpdate chromium-browser apache2 php libapache2-mod-php -y
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install git ntpdate chromium-browser apache2 php libapache2-mod-php -y
 
 git clone git@github.com:timluedtke/raspberryPiKioskSlideshow.git
 cd raspberryPiKioskSlideshow
 mv -r ./system/lxde-pi_autostart /home/pi/.config/lxsession/LXDE-pi/autostart
 ```
+
+### ntpdate
+To keep the clock of your RaspberryPi up to date we use ntpdate. This is a simple command line tool that sets the date and time via NTP (Network Time Protocol).
 
 ## Installation - step by step
 ### Basic Setup
@@ -32,10 +35,8 @@ However I used this one:
 - Install **nptupdate** to keep your Raspi-clock set correctly
 
 ```bash
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-sudo apt-get install git vim ntpdate chromium-browser apache2 php libapache2-mod-php -y
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install git ntpdate chromium-browser apache2 php libapache2-mod-php -y
 
 git clone git@github.com:timluedtke/raspberryPiKioskSlideshow.git
 cd raspberryPiKioskSlideshow
@@ -59,7 +60,7 @@ Based on this Guides:
 Everything slideshow-related happens in the ./files folder.
 - Put some images into the /files folder. Ideally with the same resultion of the screen (eg. 1920x1080px). 
 - Edit the slideshow.txt
-    - Every line starting with # is a comment line
+    - Every line starting with # is a comment line (except the transition delay setting)
     - Every other line shall be either the filename (without path) OR a URL (eg: image.jpg OR https://timluedtke.de)
     - if you want you can set the transition delay in the comment-line to a different value (seconds): # setting-transition-delay=
     

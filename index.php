@@ -33,61 +33,61 @@ echo "<!-- " . $version . " -->\r\n";
   </style>
 </head>
 <body>
-<iframe src="datetimenow.html" id="fristFrame" style="visibility: hidden;"></iframe>
+<iframe src="datetimenow.html" id="firstFrame" style="visibility: hidden;"></iframe>
 <iframe src="datetimenow.html" id="secondFrame" style="visibility: visible;"></iframe>
 <script type="text/javascript">
   var urls = [];
   <?php
-  $steuerungsinfos = file("./files/slideshow.txt");
+  $slideshow = file("./files/slideshow.txt");
   $outputSize = 0;
   $delay = 14 / 2 * 1000;
 
-  for ($i = 0; $i < count($steuerungsinfos); $i++) {
-      if (!(substr($steuerungsinfos[$i], 0, 1) === "#")) {
-          $enhancedUrl = trim($steuerungsinfos[$i]);
+  for ($i = 0; $i < count($slideshow); $i++) {
+      if (!(substr($slideshow[$i], 0, 1) === "#")) {
+          $enhancedUrl = trim($slideshow[$i]);
           if (!(substr($enhancedUrl, 0, 4) === "http")) {
               $enhancedUrl = "./files/" . $enhancedUrl;
           }
           echo "urls[" . $outputSize . "] = '" . $enhancedUrl . "';\r\n";
           $outputSize++;
-      } else if (substr($steuerungsinfos[$i], 0, 35) === "# setting-transition-delay=") {
-          $delayvalue = substr($steuerungsinfos[$i], 35);
+      } else if (substr($slideshow[$i], 0, 35) === "# setting-transition-delay=") {
+          $delayvalue = substr($slideshow[$i], 35);
           $delay = $delayvalue / 2 * 1000;
       }
   }
   echo "var delay = " . $delay . ";\r\n";
   ?>
-  var urlaktuell = 0;
-  setTimeout("loadIntoFristFrame()", 1000);
+  var urlnow = 0;
+  setTimeout("loadIntoFirstFrame()", 1000);
 
-  function loadIntoFristFrame() {
-    document.getElementById('fristFrame').src = urls[urlaktuell];
-    urlaktuell++;
-    if (urlaktuell === urls.length) {
-      urlaktuell = 0;
+  function loadIntoFirstFrame() {
+    document.getElementById('firstFrame').src = urls[urlnow];
+    urlnow++;
+    if (urlnow === urls.length) {
+      urlnow = 0;
     }
     setTimeout("switchToFirstFrame()", delay);
   }
 
   function switchToFirstFrame() {
-    document.getElementById('fristFrame').style.visibility = 'visible';
+    document.getElementById('firstFrame').style.visibility = 'visible';
     document.getElementById('secondFrame').style.visibility = 'hidden';
     setTimeout("loadIntoSecondFrame()", delay);
   }
 
   function loadIntoSecondFrame() {
-    document.getElementById('secondFrame').src = urls[urlaktuell];
-    urlaktuell++;
-    if (urlaktuell === urls.length) {
-      urlaktuell = 0;
+    document.getElementById('secondFrame').src = urls[urlnow];
+    urlnow++;
+    if (urlnow === urls.length) {
+      urlnow = 0;
     }
     setTimeout("switchToSecondFrame()", delay);
   }
 
   function switchToSecondFrame() {
-    document.getElementById('fristFrame').style.visibility = 'hidden';
+    document.getElementById('firstFrame').style.visibility = 'hidden';
     document.getElementById('secondFrame').style.visibility = 'visible';
-    setTimeout("loadIntoFristFrame()", delay);
+    setTimeout("loadIntoFirstFrame()", delay);
   }
 </script>
 </body>
