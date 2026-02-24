@@ -16,12 +16,13 @@ echo "<!-- " . $version . " -->\r\n";
       height: 100%;
       overflow: hidden;
       background-color: black;
+      cursor: none; /* HIDE CURSOR */
     }
 
     #slideshow {
       width: 100vw;
       height: 100vh;
-      object-fit: contain; /* keeps aspect ratio, no cropping */
+      object-fit: contain; /* keeps aspect ratio */
       display: block;
       background-color: black;
     }
